@@ -150,7 +150,7 @@ const LoginInterface: React.FC<Props> = ({ users, onSelect, onCreate, dbConnecte
            <h1 className="text-4xl md:text-6xl lg:text-8xl font-black text-white tracking-tighter mb-2 md:mb-4 drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
              Simulation <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-400 to-indigo-400 bg-[length:200%_auto] animate-[gradient_8s_linear_infinite]">Learning Hub</span>
            </h1>
-           <p className="text-slate-500 font-bold uppercase tracking-[0.2em] md:tracking-[0.4em] text-[9px] md:text-xs opacity-60">High-Fidelity Virtual Research Environment</p>
+           <p className="text-slate-500 font-bold uppercase tracking-[0.2em] md:tracking-[0.4em] text-[9px] md:text-xs opacity-60">Interactive Virtual Labs for Smarter Learning</p>
         </div>
 
         {/* Auth Interface Grid - Optimized for Mobile (Stack) to Desktop (Side-by-Side) */}
@@ -172,7 +172,7 @@ const LoginInterface: React.FC<Props> = ({ users, onSelect, onCreate, dbConnecte
                     </div>
                     <h3 className="text-2xl md:text-4xl font-black text-white tracking-tight mb-2 md:mb-4">Student Portal</h3>
                     <p className="text-slate-400 font-medium text-[10px] md:text-sm leading-relaxed max-w-[280px]">
-                      Access academic simulations
+                      Your gateway to interactive virtual learning.
                     </p>
                   </div>
                   <div className="flex items-center gap-2 md:gap-3 text-indigo-400 font-black text-[10px] md:text-xs uppercase tracking-widest group-hover:gap-6 transition-all">
@@ -197,7 +197,7 @@ const LoginInterface: React.FC<Props> = ({ users, onSelect, onCreate, dbConnecte
                     </div>
                     <h3 className="text-2xl md:text-4xl font-black text-white tracking-tight mb-2 md:mb-4">Faculty Admin</h3>
                     <p className="text-slate-400 font-medium text-[10px] md:text-sm leading-relaxed max-w-[280px]">
-                      Access core metrics and simulation management console.
+                      Advanced tools for simulation management and performance analytics.
                     </p>
                   </div>
                   <div className="flex items-center gap-2 md:gap-3 text-amber-500 font-black text-[10px] md:text-xs uppercase tracking-widest group-hover:gap-6 transition-all">
