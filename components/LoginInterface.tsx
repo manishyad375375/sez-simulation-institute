@@ -299,8 +299,8 @@ const LoginInterface: React.FC<Props> = ({ users, onSelect, onCreate, dbConnecte
                   <div className="w-16 h-16 md:w-20 md:h-20 bg-amber-500/10 border border-amber-500/30 rounded-3xl flex items-center justify-center text-amber-500 text-3xl md:text-4xl mb-6 shadow-2xl">
                      <i className="fa-solid fa-shield-halved"></i>
                   </div>
-                  <h3 className="text-3xl md:text-5xl font-black text-white mb-2 tracking-tight text-center leading-none">Faculty Auth</h3>
-                  <p className="text-[10px] md:text-[12px] font-black text-amber-500 uppercase tracking-[0.4em] mb-10 opacity-60">Admin Protocol</p>
+                  <h3 className="text-3xl md:text-5xl font-black text-white mb-2 tracking-tight text-center leading-none">Admin Access Portal</h3>
+                  <p className="text-[10px] md:text-[12px] font-black text-amber-500 uppercase tracking-[0.4em] mb-10 opacity-60">Authorised Admin Access</p>
                   
                   <form onSubmit={handleAdminLogin} className="w-full space-y-4 md:space-y-6">
                     <div className="space-y-4">
