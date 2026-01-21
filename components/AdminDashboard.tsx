@@ -1,6 +1,6 @@
 
 import React, { useState, useMemo } from 'react';
-import { User, UserProgress, SimulationInfo } from '../types';
+import { User, UserProgress, SimulationInfo, ModuleProgress } from '../types';
 
 interface Props {
   users: User[];
@@ -21,8 +21,8 @@ const AdminDashboard: React.FC<Props> = ({ users, allProgress, simulations }) =>
     const simCounts: Record<string, number> = {};
 
     students.forEach(s => {
-      const prog = allProgress[s.id] || {};
-      Object.entries(prog).forEach(([simId, data]) => {
+      const prog = (allProgress[s.id] || {}) as UserProgress;
+      (Object.entries(prog) as [string, ModuleProgress][]).forEach(([simId, data]) => {
         if (data.completed) {
           totalCompletions++;
           totalScore += data.score;
@@ -43,7 +43,7 @@ const AdminDashboard: React.FC<Props> = ({ users, allProgress, simulations }) =>
     const subjects: Record<string, { total: number; completed: number }> = {};
     
     simulations.forEach(sim => {
-      const subName = sim.subject.split(' / ')[0]; // Simplify "Physics / Math" to "Physics"
+      const subName = sim.subject.split(' / ')[0];
       if (!subjects[subName]) {
         subjects[subName] = { total: 0, completed: 0 };
       }
@@ -66,10 +66,10 @@ const AdminDashboard: React.FC<Props> = ({ users, allProgress, simulations }) =>
 
   const studentData = useMemo(() => {
     return students.map(s => {
-      const prog = allProgress[s.id] || {};
-      const completedCount = Object.values(prog).filter(p => p.completed).length;
+      const prog = (allProgress[s.id] || {}) as UserProgress;
+      const completedCount = (Object.values(prog) as ModuleProgress[]).filter(p => p.completed).length;
       const progressPercent = (completedCount / simulations.length) * 100;
-      const lastActive = Object.values(prog).sort((a, b) => 
+      const lastActive = (Object.values(prog) as ModuleProgress[]).sort((a, b) => 
         new Date(b.lastAccessed).getTime() - new Date(a.lastAccessed).getTime()
       )[0]?.lastAccessed || s.joinedAt;
       
@@ -98,45 +98,53 @@ const AdminDashboard: React.FC<Props> = ({ users, allProgress, simulations }) =>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        {/* Module Engagement Heatmap */}
-        <div className="lg:col-span-8 bg-white rounded-[2rem] md:rounded-[3rem] p-6 md:p-10 border border-slate-200 shadow-xl flex flex-col overflow-hidden">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 md:mb-12 gap-4">
+        {/* Module Engagement Chart - Switched to Horizontal for better alignment */}
+        <div className="lg:col-span-8 bg-white rounded-[2rem] md:rounded-[3rem] p-6 md:p-10 border border-slate-200 shadow-xl flex flex-col">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
             <div>
               <h3 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight">Module Engagement</h3>
               <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">Cohort Performance Analytics</p>
             </div>
             <div className="bg-slate-50 px-4 py-2 rounded-xl border border-slate-100 flex items-center gap-3">
               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-              <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Live Pulse Tracking</span>
+              <span className="text-[9px] font-black text-slate-500 uppercase tracking-widest">Real-time Metrics</span>
             </div>
           </div>
 
-          <div className="flex-1 w-full overflow-x-auto pb-4 custom-scrollbar">
-            <div className="min-w-[600px] h-[300px] flex items-end justify-between px-2 gap-4">
-              {simulations.map((sim) => {
-                const count = stats.simCounts[sim.id] || 0;
-                const heightPercent = stats.studentCount > 0 ? (count / stats.studentCount) * 100 : 0;
-                return (
-                  <div key={sim.id} className="flex-1 flex flex-col items-center group relative h-full justify-end">
-                    <div className="absolute -top-10 opacity-0 group-hover:opacity-100 transition-opacity bg-slate-900 text-white text-[9px] font-black px-3 py-1.5 rounded-lg whitespace-nowrap z-20 pointer-events-none">
-                      {count} Completions
+          <div className="flex-1 space-y-6 overflow-y-auto pr-2 custom-scrollbar">
+            {simulations.map((sim) => {
+              const count = stats.simCounts[sim.id] || 0;
+              const percent = stats.studentCount > 0 ? Math.round((count / stats.studentCount) * 100) : 0;
+              return (
+                <div key={sim.id} className="group flex flex-col gap-2">
+                  <div className="flex justify-between items-end">
+                    <div className="flex items-center gap-3">
+                       <div className={`w-8 h-8 rounded-xl ${sim.color} flex items-center justify-center text-white text-[10px] shadow-lg group-hover:scale-110 transition-transform`}>
+                          <i className={`fa-solid ${sim.icon}`}></i>
+                       </div>
+                       <div>
+                          <p className="text-[8px] font-black text-slate-400 uppercase tracking-widest leading-none mb-1">Module {sim.number}</p>
+                          <p className="text-sm font-black text-slate-800 leading-none group-hover:text-indigo-600 transition-colors">{sim.title}</p>
+                       </div>
                     </div>
-                    <div className="w-full relative flex flex-col justify-end" style={{ height: '80%' }}>
-                      <div 
-                        className={`w-full ${sim.color} rounded-t-xl transition-all duration-1000 ease-out group-hover:brightness-110 shadow-lg relative overflow-hidden`}
-                        style={{ height: `${Math.max(8, heightPercent)}%` }}
-                      >
-                        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                      </div>
-                    </div>
-                    <div className="mt-4 text-center">
-                      <p className="text-[9px] font-black text-slate-800 truncate w-16 md:w-20 mx-auto">{sim.title}</p>
-                      <p className="text-[8px] font-bold text-slate-400 uppercase tracking-tighter">MOD {sim.number}</p>
+                    <div className="text-right">
+                       <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest block mb-0.5">Engagement</span>
+                       <span className="text-xs font-black text-slate-900 tabular-nums">
+                         {count} <span className="text-[9px] text-slate-400">/ {stats.studentCount}</span>
+                       </span>
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                  <div className="h-3 w-full bg-slate-50 rounded-full overflow-hidden border border-slate-100 relative shadow-inner">
+                    <div 
+                      className={`h-full ${sim.color} transition-all duration-1000 ease-out shadow-lg relative overflow-hidden`}
+                      style={{ width: `${percent}%` }}
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-white/20 via-transparent to-transparent"></div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
