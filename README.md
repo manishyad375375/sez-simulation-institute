@@ -10,10 +10,18 @@
 - **Administrative Insight**: Providing faculty with cohort-wide performance analytics.
 
 ---
+## 2. Access Credentials (Evaluation Protocol)
+The following credentials are provided for the quality assurance and management review phase:
 
-## 2. UI/UX Wireframe Guide
+| Role | Email | Password | Access Level |
+|---|---|---|---|
+| **Administrator** | `demo@sez.com` | `admin123` | Full Analytics & Data Read/Write |
+| **Student** | `manishyad375@gmail.com` | `Rahul@123` | Simulation Library & Personal Progress |
 
-### 2.1 Main Application Shell
+
+## 3. UI/UX Wireframe Guide
+
+### 3.1 Main Application Shell
 The application follows a "Persistent Sidebar" pattern with a "Floating Header" for global context.
 
 ```text
@@ -34,7 +42,7 @@ _______________________________________________________________________________
 |____________________|________________________________________________________|
 ```
 
-### 2.2 Simulation Layout (12-Column Grid)
+### 3.2 Simulation Layout (12-Column Grid)
 Most simulations use a split-view approach to balance visualization with data control.
 
 ```text
@@ -53,9 +61,9 @@ _______________________________________________________________________
 
 ---
 
-## 3. Technical Architecture
+## 4. Technical Architecture
 
-### 3.1 Tech Stack
+### 4.1 Tech Stack
 - **Frontend**: React 19 (Hooks, Context, useMemo for performance).
 - **Styling**: Tailwind CSS (Utility-first, responsive grid system).
 - **Database**: Firebase Realtime Database (WebSocket-based sync).
@@ -64,7 +72,7 @@ _______________________________________________________________________
     - **SVG**: For vector-based logic and circuits (Logic Gates, Ohm's Law).
 - **Icons**: FontAwesome 6 (Pro-grade iconography).
 
-### 3.2 Data Schema
+### 4.2 Data Schema
 **Users Table:**
 ```json
 {
@@ -91,7 +99,7 @@ _______________________________________________________________________
 
 ---
 
-## 4. Simulation Modules Detail
+## 5. Simulation Modules Detail
 
 | ID | Title | Concept | Tech Used |
 |---|---|---|---|
@@ -108,9 +116,12 @@ _______________________________________________________________________
 
 ---
 
-## 5. Implementation Roadmap
+## 6. Implementation Roadmap
 1. **Core Shell**: Setup React Router logic and Firebase connectivity.
 2. **Identity Layer**: Secure Login/Register with local storage persistence.
 3. **Module Engines**: Independent development of the 10 simulation components.
 4. **Analytics Pipeline**: Aggregating raw progress data into the Admin Dashboard.
 5. **Polishing**: CSS animations, responsive breakpoints, and accessibility (ARIA).
+
+**Submitted By:**
+*Manish Ydav*
